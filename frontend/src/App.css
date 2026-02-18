@@ -1,0 +1,568 @@
+/* ==================== App Layout ==================== */
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* ==================== Header ==================== */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 16px;
+  height: 50px;
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-align: center;
+}
+
+.header-btn {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  padding: 4px 8px;
+  color: var(--color-text);
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.header-btn:hover:not(:disabled) {
+  opacity: 1;
+}
+
+.header-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+/* ==================== Toast ==================== */
+.toast {
+  position: fixed;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-text);
+  color: var(--color-bg);
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.875rem;
+  z-index: 100;
+  animation: fadeIn 0.15s ease-in;
+}
+
+/* ==================== Loading ==================== */
+.loading {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: #818384;
+}
+
+/* ==================== Board ==================== */
+.board-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0;
+  overflow: hidden;
+}
+
+.board {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.row {
+  display: flex;
+  gap: 5px;
+}
+
+.row--shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* ==================== Tile ==================== */
+.tile {
+  width: 62px;
+  height: 62px;
+  border: 2px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-text);
+  user-select: none;
+}
+
+.tile--tbd {
+  border-color: var(--color-border-filled);
+  animation: pop 0.1s ease-in-out;
+}
+
+.tile--correct {
+  background-color: var(--color-correct);
+  border-color: var(--color-correct);
+}
+
+.tile--present {
+  background-color: var(--color-present);
+  border-color: var(--color-present);
+}
+
+.tile--absent {
+  background-color: var(--color-absent);
+  border-color: var(--color-absent);
+}
+
+.tile--reveal {
+  animation: flipIn 0.25s ease-in forwards,
+             flipOut 0.25s ease-in 0.25s forwards;
+  /* The background color is set after the first half of the flip */
+  background-color: transparent;
+  border-color: var(--color-border-filled);
+}
+
+.tile--reveal.tile--correct {
+  animation: flipReveal 0.5s ease forwards;
+}
+
+.tile--reveal.tile--present {
+  animation: flipReveal 0.5s ease forwards;
+}
+
+.tile--reveal.tile--absent {
+  animation: flipReveal 0.5s ease forwards;
+}
+
+/* ==================== Keyboard ==================== */
+.keyboard {
+  padding: 8px;
+  width: 100%;
+  max-width: 500px;
+  flex-shrink: 0;
+  margin-bottom: 8px;
+}
+
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.key {
+  height: 58px;
+  min-width: 32px;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background-color: var(--color-key-bg);
+  color: var(--color-key-text);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  flex: 1;
+  max-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.key:active {
+  filter: brightness(0.85);
+}
+
+.key--special {
+  flex: 1.5;
+  max-width: 66px;
+  font-size: 0.75rem;
+}
+
+.key--correct {
+  background-color: var(--color-correct);
+}
+
+.key--present {
+  background-color: var(--color-present);
+}
+
+.key--absent {
+  background-color: var(--color-absent);
+}
+
+.key--disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.key:disabled {
+  cursor: not-allowed;
+}
+
+/* ==================== Modal ==================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal {
+  background: #1a1a1b;
+  border-radius: 12px;
+  padding: 24px;
+  width: 90%;
+  max-width: 400px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  animation: slideUp 0.3s ease;
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: var(--color-text);
+  font-size: 1.2rem;
+  opacity: 0.6;
+}
+
+.modal-close:hover {
+  opacity: 1;
+}
+
+.modal-title {
+  text-align: center;
+  font-size: 1.6rem;
+  margin-bottom: 8px;
+}
+
+.modal-answer {
+  text-align: center;
+  font-size: 1rem;
+  color: #818384;
+  margin-bottom: 16px;
+}
+
+.modal-answer strong {
+  color: var(--color-text);
+  letter-spacing: 0.15em;
+}
+
+.modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+  gap: 16px;
+}
+
+.countdown-section {
+  text-align: center;
+}
+
+.countdown-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: #818384;
+}
+
+.countdown-timer {
+  font-size: 1.8rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.share-btn {
+  background-color: var(--color-correct);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 24px;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.share-btn:hover {
+  filter: brightness(1.1);
+}
+
+/* ==================== Stats ==================== */
+.stats {
+  margin: 16px 0;
+}
+
+.stats h3 {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+  color: #818384;
+}
+
+.stats-summary {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 55px;
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.stat-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  color: #818384;
+  text-align: center;
+}
+
+.guess-distribution {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dist-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dist-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  width: 12px;
+  text-align: right;
+}
+
+.dist-bar-container {
+  flex: 1;
+}
+
+.dist-bar {
+  background: var(--color-absent);
+  color: var(--color-text);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  text-align: right;
+  border-radius: 2px;
+  min-width: 24px;
+  transition: width 0.3s ease;
+}
+
+.dist-bar--filled {
+  background: var(--color-correct);
+}
+
+/* ==================== Leaderboard ==================== */
+.leaderboard {
+  width: 100%;
+  padding: 16px;
+}
+
+.leaderboard-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.leaderboard-header h2 {
+  font-size: 1.4rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.back-btn {
+  background: none;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+.back-btn:hover {
+  border-color: var(--color-border-filled);
+}
+
+.leaderboard-msg {
+  text-align: center;
+  color: #818384;
+  padding: 40px 0;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.leaderboard-table th {
+  text-align: left;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: #818384;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.leaderboard-table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.9rem;
+}
+
+.leaderboard-table .rank {
+  font-weight: 700;
+  color: var(--color-present);
+}
+
+/* ==================== Animations ==================== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+@keyframes flipReveal {
+  0% {
+    transform: rotateX(0deg);
+  }
+  45% {
+    transform: rotateX(90deg);
+  }
+  55% {
+    transform: rotateX(90deg);
+  }
+  100% {
+    transform: rotateX(0deg);
+  }
+}
+
+/* ==================== Confetti ==================== */
+.confetti-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.confetti-piece {
+  position: absolute;
+  top: -20px;
+  width: 10px;
+  height: 10px;
+  opacity: 0;
+  animation: confettiFall 3s ease-in forwards;
+}
+
+@keyframes confettiFall {
+  0% {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100vh) rotate(720deg) scale(0.5);
+  }
+}
+
+/* ==================== Responsive ==================== */
+@media (max-width: 400px) {
+  .tile {
+    width: 52px;
+    height: 52px;
+    font-size: 1.6rem;
+  }
+
+  .key {
+    height: 50px;
+    font-size: 0.75rem;
+  }
+
+  .title {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-height: 650px) {
+  .tile {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+  }
+
+  .key {
+    height: 48px;
+  }
+
+  .board-container {
+    padding: 4px 0;
+  }
+}
