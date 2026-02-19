@@ -95,11 +95,11 @@ router.get('/:playerId', async (req, res) => {
     currentStreak = tempStreak;
 
     return res.json({
-      gamesPlayed,
-      gamesWon,
-      currentStreak,
-      maxStreak,
-      guessDistribution,
+      games_played: gamesPlayed,
+      games_won: gamesWon,
+      current_streak: currentStreak,
+      max_streak: maxStreak,
+      guess_distribution: guessDistribution,
     });
   } catch (err) {
     console.error('GET /api/stats/:playerId error:', err);

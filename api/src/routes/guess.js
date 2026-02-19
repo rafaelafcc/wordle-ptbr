@@ -82,7 +82,7 @@ router.post('/', async (req, res) => {
     const answer = dailyResult.rows[0].word.toUpperCase();
     const result = evaluateGuess(normalized, answer);
 
-    return res.json({ valid: true, result });
+    return res.json({ valid: true, result, answer });
   } catch (err) {
     console.error('POST /api/guess error:', err);
     return res.status(500).json({ error: 'Erro interno do servidor' });

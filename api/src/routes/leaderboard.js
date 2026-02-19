@@ -24,36 +24,36 @@ router.get('/', async (_req, res) => {
       if (!playersMap[pid]) {
         playersMap[pid] = {
           nickname: row.nickname || 'Anônimo',
-          gamesPlayed: 0,
-          gamesWon: 0,
-          maxStreak: 0,
+          games_played: 0,
+          games_won: 0,
+          max_streak: 0,
           _tempStreak: 0,
         };
       }
       const p = playersMap[pid];
-      p.gamesPlayed++;
+      p.games_played++;
       if (row.won) {
-        p.gamesWon++;
+        p.games_won++;
         p._tempStreak++;
-        if (p._tempStreak > p.maxStreak) p.maxStreak = p._tempStreak;
+        if (p._tempStreak > p.max_streak) p.max_streak = p._tempStreak;
       } else {
         p._tempStreak = 0;
       }
     }
 
-    const players = Object.values(playersMap)
+    const leaderboard = Object.values(playersMap)
       .map(({ _tempStreak, ...rest }) => rest)
       .sort((a, b) => {
         // Primary: max streak descending
-        if (b.maxStreak !== a.maxStreak) return b.maxStreak - a.maxStreak;
+        if (b.max_streak !== a.max_streak) return b.max_streak - a.max_streak;
         // Secondary: win percentage descending
-        const pctA = a.gamesPlayed ? a.gamesWon / a.gamesPlayed : 0;
-        const pctB = b.gamesPlayed ? b.gamesWon / b.gamesPlayed : 0;
+        const pctA = a.games_played ? a.games_won / a.games_played : 0;
+        const pctB = b.games_played ? b.games_won / b.games_played : 0;
         return pctB - pctA;
       })
       .slice(0, 10);
 
-    return res.json({ players });
+    return res.json({ leaderboard });
   } catch (err) {
     console.error('GET /api/leaderboard error:', err);
     return res.status(500).json({ error: 'Erro interno do servidor' });
